@@ -1,0 +1,28 @@
+<project name="Pe" basedir="." default="gen-keystore">
+
+	<property name="jks.path" value="src/test/resources/alex-test.jks" />
+	<property name="alias" value="test" />
+
+	<target name="init">
+		<tstamp>
+			<format property="rightNow" pattern="MM/dd/yyyy hh:mm:ss" />
+		</tstamp>
+		<echo>Build starts: ${rightNow}</echo>
+	</target>
+
+	<!-- 
+	keytool -list -keystore alex-test.jks -storepass welcome1 -v
+	-->
+	<target name="gen-keystore" depends="init">
+		<delete file="${jks.path}" quiet="true"/>
+		<genkey alias="${alias}" storepass="welcome1" keystore="${jks.path}" storetype="JKS" keysize="2048" keyalg="RSA">
+			<dname>
+				<param name="CN" value="AlexB" />
+				<param name="OU" value="WHO.CARES" />
+				<param name="O" value="MY.ORG" />
+				<param name="C" value="US" />
+			</dname>
+		</genkey>
+	</target>
+
+</project>
